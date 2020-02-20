@@ -1,38 +1,33 @@
-import React, { Component } from "react";
-import axios from "axios";
-import { Link, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { Link } from "react-router-dom";
 import MovieCard from "./MovieCard";
+import { getMovies } from '../redux/actions'
 
-export default class MovieList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movies: []
-    };
-  }
+const MovieList = () => {
+  const movies = useSelector(state => state.movies)
+  const dispatch = useDispatch()
 
-  componentDidMount() {
-    axios
-      .get("http://localhost:5000/api/movies")
-      .then(res => this.setState({ movies: res.data }))
-      .catch(err => console.log(err.response));
-  }
+  useEffect(() => {
+    dispatch(getMovies())
+  }, [dispatch])
 
-  render() {
+  const MovieDetails = ({ movie }) => {
     return (
-      <div className="movie-list">
-        {this.state.movies.map(movie => (
-          <MovieDetails key={movie.id} movie={movie} />
-        ))}
-      </div>
+      <Link to={`/movies/${movie.id}`}>
+        <MovieCard movie={movie} />
+      </Link>
     );
   }
+
+  return (
+    <div className="movie-list">
+      {movies.map(movie => (
+        <MovieDetails key={movie.id} movie={movie} />
+      ))}
+    </div>
+  );
+  
 }
 
-function MovieDetails({ movie }) {
-  return (
-    <Link to={`/movies/${movie.id}`}>
-      <MovieCard movie={movie} />
-    </Link>
-  );
-}
+export default MovieList
