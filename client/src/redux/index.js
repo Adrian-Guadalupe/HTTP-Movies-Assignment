@@ -1,9 +1,10 @@
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import { GET_MOVIES, ADD_TO_SAVED_LIST, SET_ERROR } from './actions'
+import { GET_MOVIES, ADD_TO_SAVED_LIST, SET_MOVIE_TO_EDIT, SET_ERROR } from './actions'
 
 const initialState = {
    movies: [],
+   movieToEdit: {},
    savedList: [],
    error: ''
 }
@@ -27,6 +28,11 @@ const reducer = (state = initialState, action) => {
                ...state.savedList,
                action.payload
             ]
+         }
+      case SET_MOVIE_TO_EDIT:
+         return {
+            ...state,
+            movieToEdit: action.payload
          }
       default: return state
    }

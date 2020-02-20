@@ -7,10 +7,12 @@ import MovieCard from "./MovieCard";
 const Movie = () => {
   const dispatch = useDispatch()
   const movies = useSelector(state => state.movies)
+  const movieToEdit = useSelector(state => state.movieToEdit)
   
+
   return (
     <div className="save-wrapper">
-      <MovieCard />
+      <MovieCard movie={movieToEdit}/>
       <div className="save-button" onClick={dispatch(saveMovie())}>
         Save
       </div>
