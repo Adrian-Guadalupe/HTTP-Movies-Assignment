@@ -12,22 +12,15 @@ const MovieList = () => {
     dispatch(getMovies())
   }, [dispatch])
 
-  const MovieDetails = ({ movie }) => {
-    return (
-      <Link to={`/movies/${movie.id}`}>
-        <MovieCard movie={movie} />
-      </Link>
-    );
-  }
-
   return (
     <div className="movie-list">
       {movies.map(movie => (
-        <MovieDetails key={movie.id} movie={movie} />
+        <Link to={`/movies/${movie.id}`}>
+          <MovieCard movie={movie} />
+        </Link>
       ))}
     </div>
   );
-  
 }
 
 export default MovieList

@@ -1,55 +1,26 @@
 import React from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { saveMovie } from '../redux/actions'
 import { Link } from 'react-router-dom';
-import axios from "axios";
 import MovieCard from "./MovieCard";
 
-export default class Movie extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      movie: null
-    };
-  }
-
-  componentDidMount() {
-    this.fetchMovie(this.props.match.params.id);
-  }
-
-  componentWillReceiveProps(newProps) {
-    if (this.props.match.params.id !== newProps.match.params.id) {
-      this.fetchMovie(newProps.match.params.id);
-    }
-  }
-
-  fetchMovie = id => {
-    axios
-      .get(`http://localhost:5000/api/movies/${id}`)
-      .then(res => this.setState({ movie: res.data }))
-      .catch(err => console.log(err.response));
-  };
-
-  saveMovie = () => {
-    const addToSavedList = this.props.addToSavedList;
-    addToSavedList(this.state.movie);
-  };
-
-  render() {
-    if (!this.state.movie) {
-      return <div>Loading movie information...</div>;
-    }
-
-    return (
-      <div className="save-wrapper">
-        <MovieCard movie={this.state.movie} />
-        <div className="save-button" onClick={this.saveMovie}>
-          Save
-        </div>
-        <Link className='update-button' to={`/update-movie/${this.state.movie.id}`}>Update</Link>
-        
-        <div className="delete-button" onClick={this.saveMovie}>
-          Delete
-        </div>
+const Movie = () => {
+  const dispatch = useDispatch()
+  const movies = useSelector(state => state.movies)
+  
+  return (
+    <div className="save-wrapper">
+      <MovieCard />
+      <div className="save-button" onClick={dispatch(saveMovie())}>
+        Save
       </div>
-    );
-  }
+      <Link className='update-button' to={`/update-movie/${movies.filter(movie => movie === movie.id) }`}>Update</Link>
+      
+      <div className="delete-button" onClick={dispatch(saveMovie())}>
+        Delete
+      </div>
+    </div>
+  );
 }
+
+export default Movie

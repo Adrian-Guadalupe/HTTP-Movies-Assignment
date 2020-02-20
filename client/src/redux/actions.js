@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export const GET_MOVIES = 'GET_MOVIES'
 export const SET_ERROR = 'SET_ERROR'
+export const ADD_TO_SAVED_LIST = 'ADD_TO_SAVED_LIST'
 
 export const getMovies = () => dispatch => {
    axios
@@ -14,4 +15,8 @@ export const getMovies = () => dispatch => {
          console.log('error', err.response)
          dispatch({ type: SET_ERROR, payload: 'error fetching movies' })
       })
+}
+
+export const saveMovie = (movie) => dispatch => {
+   dispatch({ type: ADD_TO_SAVED_LIST, payload: movie })
 }
