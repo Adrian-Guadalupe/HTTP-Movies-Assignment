@@ -7,7 +7,7 @@ export const SET_MOVIE_TO_EDIT = 'SET_MOVIE_TO_EDIT'
 
 export const getMovies = () => dispatch => {
    axios
-      .get('http://localhost:5000/api/movies')
+      .get('http://localhost:5000/api/movies/')
       .then(res => {
          console.log(res.data)
          dispatch({ type: GET_MOVIES, payload: res.data})
