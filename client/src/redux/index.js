@@ -4,7 +4,7 @@ import { GET_MOVIES, ADD_TO_SAVED_LIST, SET_MOVIE_TO_EDIT, SET_ERROR } from './a
 
 const initialState = {
    movies: [],
-   movieToEdit: null,
+   movieToEdit: {},
    savedList: [],
    error: ''
 }

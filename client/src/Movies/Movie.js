@@ -1,20 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { saveMovie, getMovies } from '../redux/actions'
-import { Link, useParams } from 'react-router-dom';
+import { saveMovie } from '../redux/actions'
+import { Link } from 'react-router-dom';
 import MovieCard from "./MovieCard";
 
 const Movie = () => {
   const dispatch = useDispatch()
   const movies = useSelector(state => state.movies)
   const movieToEdit = useSelector(state => state.movieToEdit)
-  const { id } = useParams()
-
-  useEffect(() => {
-    dispatch(getMovies(`${id}`))
-  }, [])
   
-
   return (
     <div className="save-wrapper">
       <MovieCard movie={movieToEdit}/>
